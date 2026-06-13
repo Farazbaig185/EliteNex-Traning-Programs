@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class EmployeeManager
 {
@@ -19,9 +17,9 @@ public class EmployeeManager
     {
         boolean found = false;
 
-        for(int i=0;i<employees.size();i++)
+        for(int i = 0; i < employees.size(); i++)
         {
-            if(employees.get(i).getId()==id)
+            if(employees.get(i).getId() == id)
             {
                 employees.remove(i);
                 found = true;
@@ -42,7 +40,7 @@ public class EmployeeManager
     {
         for(Employee e : employees)
         {
-            if(e.getId()==id)
+            if(e.getId() == id)
             {
                 return e;
             }
@@ -119,7 +117,7 @@ public class EmployeeManager
 
             if(map.containsKey(dept))
             {
-                map.put(dept,map.get(dept)+1);
+                map.put(dept,map.get(dept) + 1);
             }
             else
             {
@@ -132,39 +130,38 @@ public class EmployeeManager
 
     public void sortBySalary()
     {
-        Collections.sort(employees,
-                new Comparator<Employee>()
+        for(int i = 0; i < employees.size() - 1; i++)
+        {
+            for(int j = 0; j < employees.size() - i - 1; j++)
+            {
+                if(employees.get(j).getSalary() >
+                   employees.get(j + 1).getSalary())
                 {
-                    public int compare(Employee e1,
-                                       Employee e2)
-                    {
-                        if(e1.getSalary() >
-                                e2.getSalary())
-                            return 1;
-                        else if(e1.getSalary() <
-                                e2.getSalary())
-                            return -1;
-                        else
-                            return 0;
-                    }
-                });
+                    Employee temp = employees.get(j);
+                    employees.set(j, employees.get(j + 1));
+                    employees.set(j + 1, temp);
+                }
+            }
+        }
 
         displayAllEmployees();
     }
 
     public void sortByJoiningDate()
     {
-        Collections.sort(employees,
-                new Comparator<Employee>()
+        for(int i = 0; i < employees.size() - 1; i++)
+        {
+            for(int j = 0; j < employees.size() - i - 1; j++)
+            {
+                if(employees.get(j).getJoiningDate()
+                        .after(employees.get(j + 1).getJoiningDate()))
                 {
-                    public int compare(Employee e1,
-                                       Employee e2)
-                    {
-                        return e1.getJoiningDate().
-                                compareTo(
-                                        e2.getJoiningDate());
-                    }
-                });
+                    Employee temp = employees.get(j);
+                    employees.set(j, employees.get(j + 1));
+                    employees.set(j + 1, temp);
+                }
+            }
+        }
 
         displayAllEmployees();
     }
